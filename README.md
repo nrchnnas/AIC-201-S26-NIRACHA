@@ -30,7 +30,7 @@ Nine model configurations evaluated under **repeated 5×5 stratified cross-valid
 6. **Honest deployment recommendation: ship the LR baseline.** It matches the ANN's CV performance, has the lowest variance, trains in milliseconds, and produces clinically-interpretable coefficients. The ANN is the assignment's specified deliverable, the LR is the model the evidence supports.
 7. **Any meaningful lift requires richer features**, not a different model class. The EBI BioImage Archive metadata (AJCC stage, age, lymph-node count) and the SurGen WSI UNI embeddings (Zenodo record 14047723) are the obvious next features to add.
 
-The full reasoning, why this architecture, why these improvements, what the EDA tells us, what each metric means clinically; is in [`SR386_5yr_Survival_Report.pdf`](SR386_5yr_Survival_Report.pdf) / [`SR386_5yr_Survival_Report.docx`](SR386_5yr_Survival_Report.docx).
+The full reasoning, why this architecture, why these improvements, what the EDA tells us, what each metric means clinically; is in [`SR386_5yr_Survival_Report.pdf`](SR386_5yr_Survival_Report.pdf)
 
 ## Repo layout
 
@@ -61,8 +61,7 @@ The full reasoning, why this architecture, why these improvements, what the EDA 
 │ ├── 09_cm_improvement2.png
 │ └── 10_comparison.png
 │
-├── SR386_5yr_Survival_Report.pdf ← final report (PDF, ~6 pages)
-└── SR386_5yr_Survival_Report.docx ← final report (Word, identical content)
+└── SR386_5yr_Survival_Report.pdf ← final report (PDF, ~6 pages)
 ```
 
 ## What each file does
@@ -72,8 +71,6 @@ The full reasoning, why this architecture, why these improvements, what the EDA 
 | `build_dataset.py` | Clones the SurGen GitHub repo (if needed), merges the per-biomarker SR386 train/validation/test files keyed on `case_id`, and writes a single `data/SR386_merged.csv` with the 5-year-survival label and five real genetic markers (MSI, KRAS, RAS, NRAS, BRAF). |
 | `run_pipeline.py` | The main analysis script. Runs EDA (writes 5 PNGs into `figs/`), performs preprocessing (median/mode imputation, one-hot encoding, StandardScaler), splits 70/15/15 with stratification, trains the baseline + two improvements, generates confusion-matrix and comparison PNGs, and saves all metrics to `results.json`. **This is the script that produced the numbers in the report.** |
 | `model_tf_keras.py` | Canonical TensorFlow / Keras `Sequential` implementation requested by the assignment. Same architecture as `run_pipeline.py`, but built with Keras layers (Dense, Dropout, regularizers.l2). Run this to reproduce the same experiments using TF instead of scikit-learn. |
-| `build_report.py` | Reads `results.json` + `figs/` and emits `SR386_5yr_Survival_Report.pdf` via ReportLab. |
-| `build_report_docx.py` | Reads `results.json` + `figs/` and emits `SR386_5yr_Survival_Report.docx` via python-docx. The DOCX content is identical to the PDF. |
 | `data/SR386_merged.csv` | Cached merged dataset so reviewers don't need to re-clone the SurGen repo. |
 | `figs/` | All ten plots used in the report, as standalone PNGs. |
 | `results.json` | All baseline + improvement metrics in one machine-readable file. |
@@ -104,23 +101,17 @@ python run_pipeline.py
 ```
 This regenerates every PNG in `figs/` and overwrites `results.json` with fresh metrics.
 
-### 4. Run the canonical TensorFlow / Keras version (optional, but the assignment requires it)
+### 4. Run the canonical TensorFlow / Keras version 
 ```bash
 python model_tf_keras.py
 ```
 Creates a parallel `figs_tf/` directory and `results_tf.json`. The architectures match `run_pipeline.py` so the metrics are directly comparable.
 
-### 5. Rebuild the reports
-```bash
-python build_report.py # writes SR386_5yr_Survival_Report.pdf
-python build_report_docx.py # writes SR386_5yr_Survival_Report.docx
-```
-
 ### One-shot reproduction
 ```bash
 pip install -r requirements.txt
 git clone --depth=1 https://github.com/CraigMyles/SurGen-Dataset.git /tmp/SurGen-Dataset
-python build_dataset.py && python run_pipeline.py && python build_report.py
+python build_dataset.py && python run_pipeline.py
 ```
 
 ## Notes on the data
