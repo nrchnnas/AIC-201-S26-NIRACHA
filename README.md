@@ -6,7 +6,7 @@ The project ships as a single, reproducible repository with the **PDF and DOCX r
 
 ## Headline result
 
-Nine model configurations evaluated under **repeated 5×5 stratified cross-validation** (25 folds, mean ± std). **Real GitHub data only, five binary genetic markers, no synthetic demographics:**
+Nine model configurations evaluated under **repeated 5×5 stratified cross-validation** (25 folds, mean ± std).
 
 | Model | Acc | Prec | Recall | F1 | AUC |
 |---|---|---|---|---|---|
