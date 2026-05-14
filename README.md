@@ -30,7 +30,7 @@ Nine model configurations evaluated under **repeated 5×5 stratified cross-valid
 6. **Honest deployment recommendation: ship the LR baseline.** It matches the ANN's CV performance, has the lowest variance, trains in milliseconds, and produces clinically-interpretable coefficients. The ANN is the assignment's specified deliverable, the LR is the model the evidence supports.
 7. **Any meaningful lift requires richer features**, not a different model class. The EBI BioImage Archive metadata (AJCC stage, age, lymph-node count) and the SurGen WSI UNI embeddings (Zenodo record 14047723) are the obvious next features to add.
 
-The full reasoning, why this architecture, why these improvements, what the EDA tells us, what each metric means clinically; is in [`SR386_5yr_Survival_Report.pdf`](SR386_5yr_Survival_Report.pdf)
+The full reasoning, why this architecture, why these improvements, what the EDA tells us, what each metric means in detail is in [`SR386_5yr_Survival_Report.pdf`](SR386_NIRACHA.pdf)
 
 ## Repo layout
 
@@ -40,7 +40,7 @@ The full reasoning, why this architecture, why these improvements, what the EDA 
 │
 ├── build_dataset.py ← merge SurGen GitHub CSVs → data/SR386_merged.csv
 ├── run_pipeline.py ← EDA + baseline ANN + 2 improvements (sklearn MLPClassifier)
-├── model_tf_keras.py ← canonical TensorFlow / Keras Sequential implementation
+├── model_tf_keras.py ← canonical TensorFlow / Keras SequentialF implementation
 ├── build_report.py ← assembles SR386_5yr_Survival_Report.pdf
 ├── build_report_docx.py ← assembles SR386_5yr_Survival_Report.docx (python-docx)
 │
